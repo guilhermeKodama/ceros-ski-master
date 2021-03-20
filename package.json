@@ -18,7 +18,7 @@
   "license": "",
   "homepage": "https://github.com/ceros/ceros-ski#readme",
   "devDependencies": {
-    "@babel/cli": "^7.7.7",
+    "@babel/cli": "^7.13.10",
     "@babel/core": "^7.7.7",
     "@babel/node": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
@@ -32,7 +32,7 @@
     "jest": "^24.9.0",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
     "css-loader": "^2.1.1",
