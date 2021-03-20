@@ -2,6 +2,7 @@ env:
   browser: true
   es6: true
   node: true
+  jest: true
 extends:
   - standard
 globals:
@@ -13,6 +14,8 @@ parserOptions:
     jsx: true
   ecmaVersion: 2018
   sourceType: module
+plugins:
+  - jest
 rules:
   indent: ['off']
   semi: ['error', 'never']
