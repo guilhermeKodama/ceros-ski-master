@@ -2,7 +2,13 @@ import * as Constants from '../../Constants'
 import { Entity } from '../Entity'
 import { randomInt } from '../../Core/Utils'
 
-const assetTypes = [Constants.TREE, Constants.TREE_CLUSTER, Constants.ROCK1, Constants.ROCK2]
+const assetTypes = [
+  Constants.TREE,
+  Constants.TREE_CLUSTER,
+  Constants.ROCK1,
+  Constants.ROCK2,
+  Constants.RAMP
+]
 
 export class Obstacle extends Entity {
   constructor(x, y) {
@@ -18,5 +24,9 @@ export class Obstacle extends Entity {
 
   isTree() {
     return Constants.TREES_SET.has(this.assetName)
+  }
+
+  isRamp() {
+    return this.assetName === Constants.RAMP
   }
 }

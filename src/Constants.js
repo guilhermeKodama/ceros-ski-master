@@ -18,6 +18,7 @@ export const TREE = 'tree'
 export const TREE_CLUSTER = 'treeCluster'
 export const ROCK1 = 'rock1'
 export const ROCK2 = 'rock2'
+export const RAMP = 'ramp'
 
 export const SKIER_STARTING_SPEED = 10
 export const SKIER_DIAGONAL_SPEED_REDUCER = 1.4142
@@ -36,7 +37,8 @@ export const ASSETS = {
   [TREE]: path.join(__dirname, '../img/tree_1.png'),
   [TREE_CLUSTER]: path.join(__dirname, '../img/tree_cluster.png'),
   [ROCK1]: path.join(__dirname, '../img/rock_1.png'),
-  [ROCK2]: path.join(__dirname, '../img/rock_2.png')
+  [ROCK2]: path.join(__dirname, '../img/rock_2.png'),
+  [RAMP]: path.join(__dirname, '../img/jump_ramp.png')
 }
 
 export const SKIER_DIRECTIONS = {

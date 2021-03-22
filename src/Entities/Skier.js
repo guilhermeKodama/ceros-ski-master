@@ -153,7 +153,9 @@ export class Skier extends Entity {
       return intersectTwoRects(skierBounds, obstacleBounds)
     })
 
-    if (
+    if (collision && collision.isRamp() && !this.isJumping()) {
+      this.jump()
+    } else if (
       (collision && collision.isTree()) ||
       (collision && !this.isJumping() && collision.isRock())
     ) {
