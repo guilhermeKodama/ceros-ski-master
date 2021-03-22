@@ -21,17 +21,19 @@ export class Skier extends Entity {
     this.assetName = Constants.SKIER_DIRECTION_ASSET[this.direction]
   }
 
+  isJumping() {
+    return Constants.SKIER_JUMP_DIRECTIONS.has(this.direction)
+  }
+
   move() {
-    switch (this.direction) {
-      case Constants.SKIER_DIRECTIONS.LEFT_DOWN:
-        this.moveSkierLeftDown()
-        break
-      case Constants.SKIER_DIRECTIONS.DOWN:
-        this.moveSkierDown()
-        break
-      case Constants.SKIER_DIRECTIONS.RIGHT_DOWN:
-        this.moveSkierRightDown()
-        break
+    if (this.direction === Constants.SKIER_DIRECTIONS.LEFT_DOWN) {
+      this.moveSkierLeftDown()
+    } else if (this.direction === Constants.SKIER_DIRECTIONS.DOWN) {
+      this.moveSkierDown()
+    } else if (this.direction === Constants.SKIER_DIRECTIONS.RIGHT_DOWN) {
+      this.moveSkierRightDown()
+    } else if (this.isJumping()) {
+      this.moveSkierDown()
     }
   }
 
@@ -62,29 +64,34 @@ export class Skier extends Entity {
   }
 
   turnLeft() {
-    if (this.direction === Constants.SKIER_DIRECTIONS.LEFT) {
-      this.moveSkierLeft()
-    } else if (this.direction === Constants.SKIER_DIRECTIONS.CRASH) {
-      this.moveSkierLeft()
-      this.setDirection(Constants.SKIER_DIRECTIONS.LEFT)
-    } else {
-      this.setDirection(this.direction - 1)
+    if (!this.isJumping()) {
+      if (this.direction === Constants.SKIER_DIRECTIONS.LEFT) {
+        this.moveSkierLeft()
+      } else if (this.direction === Constants.SKIER_DIRECTIONS.CRASH) {
+        this.moveSkierLeft()
+        this.setDirection(Constants.SKIER_DIRECTIONS.LEFT)
+      } else {
+        this.setDirection(this.direction - 1)
+      }
     }
   }
 
   turnRight() {
-    if (this.direction === Constants.SKIER_DIRECTIONS.RIGHT) {
-      this.moveSkierRight()
-    } else if (this.direction === Constants.SKIER_DIRECTIONS.CRASH) {
-      this.moveSkierRight()
-      this.setDirection(Constants.SKIER_DIRECTIONS.RIGHT)
-    } else {
-      this.setDirection(this.direction + 1)
+    if (!this.isJumping()) {
+      if (this.direction === Constants.SKIER_DIRECTIONS.RIGHT) {
+        this.moveSkierRight()
+      } else if (this.direction === Constants.SKIER_DIRECTIONS.CRASH) {
+        this.moveSkierRight()
+        this.setDirection(Constants.SKIER_DIRECTIONS.RIGHT)
+      } else {
+        this.setDirection(this.direction + 1)
+      }
     }
   }
 
   turnUp() {
     if (
+      !this.isJumping() ||
       this.direction === Constants.SKIER_DIRECTIONS.LEFT ||
       this.direction === Constants.SKIER_DIRECTIONS.RIGHT
     ) {
@@ -93,7 +100,33 @@ export class Skier extends Entity {
   }
 
   turnDown() {
-    this.setDirection(Constants.SKIER_DIRECTIONS.DOWN)
+    if (!this.isJumping()) {
+      this.setDirection(Constants.SKIER_DIRECTIONS.DOWN)
+    }
+  }
+
+  jump() {
+    this.setDirection(Constants.SKIER_DIRECTIONS.JUMP)
+    const animation = setInterval(() => {
+      switch (this.direction) {
+        case Constants.SKIER_DIRECTIONS.JUMP:
+          this.setDirection(Constants.SKIER_DIRECTIONS.JUMP2)
+          break
+        case Constants.SKIER_DIRECTIONS.JUMP2:
+          this.setDirection(Constants.SKIER_DIRECTIONS.JUMP3)
+          break
+        case Constants.SKIER_DIRECTIONS.JUMP3:
+          this.setDirection(Constants.SKIER_DIRECTIONS.JUMP4)
+          break
+        case Constants.SKIER_DIRECTIONS.JUMP4:
+          clearInterval(animation)
+          this.setDirection(Constants.SKIER_DIRECTIONS.DOWN)
+          break
+        case Constants.SKIER_DIRECTIONS.CRASH:
+          clearInterval(animation)
+          break
+      }
+    }, Constants.SKIER_JUMP_ANIMATION_SPEED)
   }
 
   checkIfSkierHitObstacle(obstacleManager, assetManager) {
@@ -120,7 +153,10 @@ export class Skier extends Entity {
       return intersectTwoRects(skierBounds, obstacleBounds)
     })
 
-    if (collision) {
+    if (
+      (collision && collision.isTree()) ||
+      (collision && !this.isJumping() && collision.isRock())
+    ) {
       this.setDirection(Constants.SKIER_DIRECTIONS.CRASH)
     }
   }

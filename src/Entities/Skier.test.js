@@ -50,6 +50,94 @@ test('should turn right', () => {
 })
 
 /*
+  JUMPING
+ */
+
+test('should jump', () => {
+  const skier = new Skier(0, 0)
+  skier.jump()
+
+  expect(skier.direction).toBe(Constants.SKIER_DIRECTIONS.JUMP)
+  expect(skier.assetName).toBe(Constants.SKIER_JUMP_1)
+})
+
+test('should crash in trees while jumping', () => {
+  const skier = new Skier(0, 0)
+  skier.jump()
+
+  const obstacle = new Obstacle(0, 0)
+  obstacle.assetName = Constants.TREE
+
+  const obstacleManager = new ObstacleManager()
+
+  // mock obstacle
+  obstacleManager.obstacles.push(obstacle)
+
+  // simulate collidion
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager)
+
+  expect(skier.direction).toBe(Constants.SKIER_DIRECTIONS.CRASH)
+  expect(skier.assetName).toBe(Constants.SKIER_CRASH)
+})
+
+test('should crash in tree cluster while jumping', () => {
+  const skier = new Skier(0, 0)
+  skier.jump()
+
+  const obstacle = new Obstacle(0, 0)
+  obstacle.assetName = Constants.TREE_CLUSTER
+
+  const obstacleManager = new ObstacleManager()
+
+  // mock obstacle
+  obstacleManager.obstacles.push(obstacle)
+
+  // simulate collidion
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager)
+
+  expect(skier.direction).toBe(Constants.SKIER_DIRECTIONS.CRASH)
+  expect(skier.assetName).toBe(Constants.SKIER_CRASH)
+})
+
+test('should not crash in rocks while jumping', () => {
+  const skier = new Skier(0, 0)
+  skier.jump()
+
+  const obstacle = new Obstacle(0, 0)
+  obstacle.assetName = Constants.ROCK1
+
+  const obstacleManager = new ObstacleManager()
+
+  // mock obstacle
+  obstacleManager.obstacles.push(obstacle)
+
+  // simulate collidion
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager)
+
+  expect(skier.direction).toBe(Constants.SKIER_DIRECTIONS.JUMP)
+  expect(skier.assetName).toBe(Constants.SKIER_JUMP_1)
+})
+
+test('should not crash in cluster rocks while jumping', () => {
+  const skier = new Skier(0, 0)
+  skier.jump()
+
+  const obstacle = new Obstacle(0, 0)
+  obstacle.assetName = Constants.ROCK2
+
+  const obstacleManager = new ObstacleManager()
+
+  // mock obstacle
+  obstacleManager.obstacles.push(obstacle)
+
+  // simulate collidion
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager)
+
+  expect(skier.direction).toBe(Constants.SKIER_DIRECTIONS.JUMP)
+  expect(skier.assetName).toBe(Constants.SKIER_JUMP_1)
+})
+
+/*
   CRASH
  */
 

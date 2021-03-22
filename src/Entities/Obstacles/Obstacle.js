@@ -11,4 +11,12 @@ export class Obstacle extends Entity {
     const assetIdx = randomInt(0, assetTypes.length - 1)
     this.assetName = assetTypes[assetIdx]
   }
+
+  isRock() {
+    return Constants.ROCKS_SET.has(this.assetName)
+  }
+
+  isTree() {
+    return Constants.TREES_SET.has(this.assetName)
+  }
 }
