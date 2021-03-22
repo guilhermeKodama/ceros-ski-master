@@ -1,3 +1,5 @@
+import path from 'path'
+
 export const GAME_WIDTH = window.innerWidth
 export const GAME_HEIGHT = window.innerHeight
 
@@ -16,16 +18,16 @@ export const SKIER_STARTING_SPEED = 10
 export const SKIER_DIAGONAL_SPEED_REDUCER = 1.4142
 
 export const ASSETS = {
-  [SKIER_CRASH]: 'img/skier_crash.png',
-  [SKIER_LEFT]: 'img/skier_left.png',
-  [SKIER_LEFTDOWN]: 'img/skier_left_down.png',
-  [SKIER_DOWN]: 'img/skier_down.png',
-  [SKIER_RIGHTDOWN]: 'img/skier_right_down.png',
-  [SKIER_RIGHT]: 'img/skier_right.png',
-  [TREE]: 'img/tree_1.png',
-  [TREE_CLUSTER]: 'img/tree_cluster.png',
-  [ROCK1]: 'img/rock_1.png',
-  [ROCK2]: 'img/rock_2.png'
+  [SKIER_CRASH]: path.join(__dirname, '../img/skier_crash.png'),
+  [SKIER_LEFT]: path.join(__dirname, '../img/skier_left.png'),
+  [SKIER_LEFTDOWN]: path.join(__dirname, '../img/skier_left_down.png'),
+  [SKIER_DOWN]: path.join(__dirname, '../img/skier_down.png'),
+  [SKIER_RIGHTDOWN]: path.join(__dirname, '../img/skier_right_down.png'),
+  [SKIER_RIGHT]: path.join(__dirname, '../img/skier_right.png'),
+  [TREE]: path.join(__dirname, '../img/tree_1.png'),
+  [TREE_CLUSTER]: path.join(__dirname, '../img/tree_cluster.png'),
+  [ROCK1]: path.join(__dirname, '../img/rock_1.png'),
+  [ROCK2]: path.join(__dirname, '../img/rock_2.png')
 }
 
 export const SKIER_DIRECTIONS = {
@@ -50,5 +52,6 @@ export const KEYS = {
   LEFT: 37,
   RIGHT: 39,
   UP: 38,
-  DOWN: 40
+  DOWN: 40,
+  SPACE: 32
 }

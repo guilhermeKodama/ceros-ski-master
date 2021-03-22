@@ -17,14 +17,21 @@ export class AssetManager {
   loadSingleAsset(assetUrl, assetName) {
     return new Promise((resolve) => {
       const assetImage = new Image()
-      assetImage.onload = () => {
-        assetImage.width /= 2
-        assetImage.height /= 2
+      assetImage.src = assetUrl
 
+      // adaptation to run on jest
+      if (assetImage.onload) {
+        assetImage.onload = () => {
+          assetImage.width /= 2
+          assetImage.height /= 2
+
+          this.loadedAssets[assetName] = assetImage
+          resolve()
+        }
+      } else {
         this.loadedAssets[assetName] = assetImage
         resolve()
       }
-      assetImage.src = assetUrl
     })
   }
 
