@@ -14,13 +14,9 @@ export class Game {
     this.score = 0
     this.assetManager = new AssetManager()
     this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT)
-    this.rhino = new Rhino(0, 0)
+    this.rhino = new Rhino(500, -100)
     this.skier = new Skier(0, 0)
     this.obstacleManager = new ObstacleManager()
-
-    setInterval(() => {
-      console.log('score:', this.score)
-    }, 1000)
 
     document.addEventListener('keydown', this.handleKeyDown.bind(this))
   }
@@ -31,6 +27,10 @@ export class Game {
 
   async load() {
     await this.assetManager.loadAssets(Constants.ASSETS)
+  }
+
+  isRhinoOnTheLoose() {
+    return this.score > 1000
   }
 
   run() {
@@ -44,7 +44,7 @@ export class Game {
 
   updateGameWindow() {
     this.skier.move()
-    this.rhino.move()
+    if (this.isRhinoOnTheLoose()) this.rhino.move(this.skier)
     this.calculateScore()
 
     const previousGameWindow = this.gameWindow
@@ -53,13 +53,15 @@ export class Game {
     this.obstacleManager.placeNewObstacle(this.gameWindow, previousGameWindow)
 
     this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager)
+    this.rhino.checkIfHitSkier(this.skier, this.assetManager)
+    this.skier.checkIfHitRhino(this.rhino, this.assetManager)
   }
 
   drawGameWindow() {
     this.canvas.setDrawOffset(this.gameWindow.left, this.gameWindow.top)
 
-    this.skier.draw(this.canvas, this.assetManager)
-    this.rhino.draw(this.canvas, this.assetManager)
+    if (!this.skier.isDead()) this.skier.draw(this.canvas, this.assetManager)
+    if (this.isRhinoOnTheLoose()) this.rhino.draw(this.canvas, this.assetManager)
     this.obstacleManager.drawObstacles(this.canvas, this.assetManager)
   }
 

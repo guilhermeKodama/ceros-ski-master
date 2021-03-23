@@ -11,6 +11,7 @@ export const LEFTDOWN = 'skierLeftDown'
 export const DOWN = 'skierDown'
 export const RIGHTDOWN = 'skierRightDown'
 export const RIGHT = 'skierRight'
+export const DEAD = 'dead'
 
 /* ASSETS */
 export const JUMP_1 = 'skierJump1'
@@ -24,6 +25,7 @@ export const ASSETS = {
   [LEFTDOWN]: path.join(__dirname, '../img/skier_left_down.png'),
   [DOWN]: path.join(__dirname, '../img/skier_down.png'),
   [RIGHTDOWN]: path.join(__dirname, '../img/skier_right_down.png'),
+  [DEAD]: path.join(__dirname, '../img/skier_crash.png'),
   [RIGHT]: path.join(__dirname, '../img/skier_right.png'),
   [JUMP_1]: path.join(__dirname, '../img/skier_jump_1.png'),
   [JUMP_2]: path.join(__dirname, '../img/skier_jump_2.png'),
@@ -41,7 +43,8 @@ export const DIRECTIONS = {
   JUMP: 6,
   JUMP2: 7,
   JUMP3: 8,
-  JUMP4: 9
+  JUMP4: 9,
+  DEAD: 10
 }
 
 export const JUMP_DIRECTIONS = new Set([
@@ -61,5 +64,6 @@ export const DIRECTION_ASSET = {
   [DIRECTIONS.JUMP]: JUMP_1,
   [DIRECTIONS.JUMP2]: JUMP_2,
   [DIRECTIONS.JUMP3]: JUMP_3,
-  [DIRECTIONS.JUMP4]: JUMP_4
+  [DIRECTIONS.JUMP4]: JUMP_4,
+  [DIRECTIONS.DEAD]: DEAD
 }

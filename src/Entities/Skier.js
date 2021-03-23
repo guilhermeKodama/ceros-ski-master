@@ -25,6 +25,10 @@ export class Skier extends Entity {
     return Constants.SKIER.JUMP_DIRECTIONS.has(this.direction)
   }
 
+  isDead() {
+    return this.direction === Constants.SKIER.DIRECTIONS.DEAD
+  }
+
   move() {
     if (this.direction === Constants.SKIER.DIRECTIONS.LEFT_DOWN) {
       this.moveSkierLeftDown()
@@ -64,7 +68,7 @@ export class Skier extends Entity {
   }
 
   turnLeft() {
-    if (!this.isJumping()) {
+    if (!this.isJumping() && !this.isDead()) {
       if (this.direction === Constants.SKIER.DIRECTIONS.LEFT) {
         this.moveSkierLeft()
       } else if (this.direction === Constants.SKIER.DIRECTIONS.CRASH) {
@@ -77,7 +81,7 @@ export class Skier extends Entity {
   }
 
   turnRight() {
-    if (!this.isJumping()) {
+    if (!this.isJumping() && !this.isDead()) {
       if (this.direction === Constants.SKIER.DIRECTIONS.RIGHT) {
         this.moveSkierRight()
       } else if (this.direction === Constants.SKIER.DIRECTIONS.CRASH) {
@@ -91,21 +95,24 @@ export class Skier extends Entity {
 
   turnUp() {
     if (
-      !this.isJumping() ||
-      this.direction === Constants.SKIER.DIRECTIONS.LEFT ||
-      this.direction === Constants.SKIER.DIRECTIONS.RIGHT
+      !this.isJumping() &&
+      !this.isDead() &&
+      (this.direction === Constants.SKIER.DIRECTIONS.LEFT ||
+        this.direction === Constants.SKIER.DIRECTIONS.RIGHT)
     ) {
       this.moveSkierUp()
     }
   }
 
   turnDown() {
-    if (!this.isJumping()) {
+    if (!this.isJumping() && !this.isDead()) {
       this.setDirection(Constants.SKIER.DIRECTIONS.DOWN)
     }
   }
 
   jump() {
+    if (this.isDead()) return
+
     this.setDirection(Constants.SKIER.DIRECTIONS.JUMP)
 
     // disable animations while testing to avoid race conditions
@@ -131,6 +138,10 @@ export class Skier extends Entity {
         }
       }, Constants.SKIER.JUMP_ANIMATION_SPEED)
     }
+  }
+
+  die() {
+    this.setDirection(Constants.SKIER.DIRECTIONS.DEAD)
   }
 
   checkIfSkierHitObstacle(obstacleManager, assetManager) {
@@ -164,6 +175,33 @@ export class Skier extends Entity {
       (collision && !this.isJumping() && collision.isRock())
     ) {
       this.setDirection(Constants.SKIER.DIRECTIONS.CRASH)
+    }
+  }
+
+  checkIfHitRhino(rhino, assetManager) {
+    const asset = assetManager.getAsset(this.assetName)
+
+    const skierBounds = new Rect(
+      this.x - asset.width / 2,
+      this.y - asset.height / 2,
+      this.x + asset.width / 2,
+      this.y - asset.height / 4
+    )
+
+    const rhinoAsset = assetManager.getAsset(rhino.getAssetName())
+    const rhinoPosition = rhino.getPosition()
+
+    const rhinoBounds = new Rect(
+      rhinoPosition.x - rhinoAsset.width / 2,
+      rhinoPosition.y - rhinoAsset.height / 2,
+      rhinoPosition.x + rhinoAsset.width / 2,
+      rhinoPosition.y
+    )
+
+    const collision = intersectTwoRects(skierBounds, rhinoBounds)
+
+    if (collision && !this.isDead()) {
+      this.die()
     }
   }
 }
