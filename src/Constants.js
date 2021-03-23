@@ -3,6 +3,7 @@ import path from 'path'
 export const GAME_WIDTH = window.innerWidth
 export const GAME_HEIGHT = window.innerHeight
 export const SKIER_JUMP_ANIMATION_SPEED = 200
+export const ANIMATIONS_ENABLED = process.env.NODE_ENV !== 'test'
 
 export const SKIER_CRASH = 'skierCrash'
 export const SKIER_LEFT = 'skierLeft'

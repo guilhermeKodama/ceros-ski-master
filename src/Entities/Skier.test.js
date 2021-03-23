@@ -145,6 +145,9 @@ test('should recover from collision and turn left', () => {
   const skier = new Skier(0, 0)
 
   const obstacle = new Obstacle(0, 0)
+  // forcing obstacle to not be a ramp
+  obstacle.assetName = Constants.TREE_CLUSTER
+
   const obstacleManager = new ObstacleManager()
 
   // mock obstacle
@@ -163,6 +166,9 @@ test('should recover from collision and turn right', () => {
   const skier = new Skier(0, 0)
 
   const obstacle = new Obstacle(0, 0)
+  // forcing obstacle to not be a ramp
+  obstacle.assetName = Constants.ROCK2
+
   const obstacleManager = new ObstacleManager()
 
   // mock obstacle

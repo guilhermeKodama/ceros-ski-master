@@ -107,26 +107,30 @@ export class Skier extends Entity {
 
   jump() {
     this.setDirection(Constants.SKIER_DIRECTIONS.JUMP)
-    const animation = setInterval(() => {
-      switch (this.direction) {
-        case Constants.SKIER_DIRECTIONS.JUMP:
-          this.setDirection(Constants.SKIER_DIRECTIONS.JUMP2)
-          break
-        case Constants.SKIER_DIRECTIONS.JUMP2:
-          this.setDirection(Constants.SKIER_DIRECTIONS.JUMP3)
-          break
-        case Constants.SKIER_DIRECTIONS.JUMP3:
-          this.setDirection(Constants.SKIER_DIRECTIONS.JUMP4)
-          break
-        case Constants.SKIER_DIRECTIONS.JUMP4:
-          clearInterval(animation)
-          this.setDirection(Constants.SKIER_DIRECTIONS.DOWN)
-          break
-        case Constants.SKIER_DIRECTIONS.CRASH:
-          clearInterval(animation)
-          break
-      }
-    }, Constants.SKIER_JUMP_ANIMATION_SPEED)
+
+    // disable animations while testing to avoid race conditions
+    if (Constants.ANIMATIONS_ENABLED) {
+      const animation = setInterval(() => {
+        switch (this.direction) {
+          case Constants.SKIER_DIRECTIONS.JUMP:
+            this.setDirection(Constants.SKIER_DIRECTIONS.JUMP2)
+            break
+          case Constants.SKIER_DIRECTIONS.JUMP2:
+            this.setDirection(Constants.SKIER_DIRECTIONS.JUMP3)
+            break
+          case Constants.SKIER_DIRECTIONS.JUMP3:
+            this.setDirection(Constants.SKIER_DIRECTIONS.JUMP4)
+            break
+          case Constants.SKIER_DIRECTIONS.JUMP4:
+            clearInterval(animation)
+            this.setDirection(Constants.SKIER_DIRECTIONS.DOWN)
+            break
+          case Constants.SKIER_DIRECTIONS.CRASH:
+            clearInterval(animation)
+            break
+        }
+      }, Constants.SKIER_JUMP_ANIMATION_SPEED)
+    }
   }
 
   checkIfSkierHitObstacle(obstacleManager, assetManager) {
