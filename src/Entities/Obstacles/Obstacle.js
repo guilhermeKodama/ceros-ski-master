@@ -3,11 +3,11 @@ import { Entity } from '../Entity'
 import { randomInt } from '../../Core/Utils'
 
 const assetTypes = [
-  Constants.TREE,
-  Constants.TREE_CLUSTER,
-  Constants.ROCK1,
-  Constants.ROCK2,
-  Constants.RAMP
+  Constants.OBSTACLES.TREE,
+  Constants.OBSTACLES.TREE_CLUSTER,
+  Constants.OBSTACLES.ROCK1,
+  Constants.OBSTACLES.ROCK2,
+  Constants.OBSTACLES.RAMP
 ]
 
 export class Obstacle extends Entity {
@@ -19,14 +19,14 @@ export class Obstacle extends Entity {
   }
 
   isRock() {
-    return Constants.ROCKS_SET.has(this.assetName)
+    return Constants.OBSTACLES.ROCKS_SET.has(this.assetName)
   }
 
   isTree() {
-    return Constants.TREES_SET.has(this.assetName)
+    return Constants.OBSTACLES.TREES_SET.has(this.assetName)
   }
 
   isRamp() {
-    return this.assetName === Constants.RAMP
+    return this.assetName === Constants.OBSTACLES.RAMP
   }
 }

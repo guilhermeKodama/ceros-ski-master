@@ -2,6 +2,8 @@ import * as Constants from '../Constants'
 import { AssetManager } from './AssetManager'
 import { Canvas } from './Canvas'
 import { Skier } from '../Entities/Skier'
+import { Rhino } from '../Entities/Rhino'
+
 import { ObstacleManager } from '../Entities/Obstacles/ObstacleManager'
 import { Rect } from './Utils'
 
@@ -9,10 +11,16 @@ export class Game {
   gameWindow = null
 
   constructor() {
+    this.score = 0
     this.assetManager = new AssetManager()
     this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT)
+    this.rhino = new Rhino(0, 0)
     this.skier = new Skier(0, 0)
     this.obstacleManager = new ObstacleManager()
+
+    setInterval(() => {
+      console.log('score:', this.score)
+    }, 1000)
 
     document.addEventListener('keydown', this.handleKeyDown.bind(this))
   }
@@ -36,6 +44,8 @@ export class Game {
 
   updateGameWindow() {
     this.skier.move()
+    this.rhino.move()
+    this.calculateScore()
 
     const previousGameWindow = this.gameWindow
     this.calculateGameWindow()
@@ -49,6 +59,7 @@ export class Game {
     this.canvas.setDrawOffset(this.gameWindow.left, this.gameWindow.top)
 
     this.skier.draw(this.canvas, this.assetManager)
+    this.rhino.draw(this.canvas, this.assetManager)
     this.obstacleManager.drawObstacles(this.canvas, this.assetManager)
   }
 
@@ -58,6 +69,10 @@ export class Game {
     const top = skierPosition.y - Constants.GAME_HEIGHT / 2
 
     this.gameWindow = new Rect(left, top, left + Constants.GAME_WIDTH, top + Constants.GAME_HEIGHT)
+  }
+
+  calculateScore() {
+    this.score = parseInt(this.skier.y / 10)
   }
 
   handleKeyDown(event) {

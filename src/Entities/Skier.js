@@ -3,10 +3,10 @@ import { Entity } from './Entity'
 import { intersectTwoRects, Rect } from '../Core/Utils'
 
 export class Skier extends Entity {
-  assetName = Constants.SKIER_DOWN
+  assetName = Constants.SKIER.DOWN
 
-  direction = Constants.SKIER_DIRECTIONS.DOWN
-  speed = Constants.SKIER_STARTING_SPEED
+  direction = Constants.SKIER.DIRECTIONS.DOWN
+  speed = Constants.SKIER.STARTING_SPEED
 
   constructor(x, y) {
     super(x, y)
@@ -18,19 +18,19 @@ export class Skier extends Entity {
   }
 
   updateAsset() {
-    this.assetName = Constants.SKIER_DIRECTION_ASSET[this.direction]
+    this.assetName = Constants.SKIER.DIRECTION_ASSET[this.direction]
   }
 
   isJumping() {
-    return Constants.SKIER_JUMP_DIRECTIONS.has(this.direction)
+    return Constants.SKIER.JUMP_DIRECTIONS.has(this.direction)
   }
 
   move() {
-    if (this.direction === Constants.SKIER_DIRECTIONS.LEFT_DOWN) {
+    if (this.direction === Constants.SKIER.DIRECTIONS.LEFT_DOWN) {
       this.moveSkierLeftDown()
-    } else if (this.direction === Constants.SKIER_DIRECTIONS.DOWN) {
+    } else if (this.direction === Constants.SKIER.DIRECTIONS.DOWN) {
       this.moveSkierDown()
-    } else if (this.direction === Constants.SKIER_DIRECTIONS.RIGHT_DOWN) {
+    } else if (this.direction === Constants.SKIER.DIRECTIONS.RIGHT_DOWN) {
       this.moveSkierRightDown()
     } else if (this.isJumping()) {
       this.moveSkierDown()
@@ -38,12 +38,12 @@ export class Skier extends Entity {
   }
 
   moveSkierLeft() {
-    this.x -= Constants.SKIER_STARTING_SPEED
+    this.x -= Constants.SKIER.STARTING_SPEED
   }
 
   moveSkierLeftDown() {
-    this.x -= this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER
-    this.y += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER
+    this.x -= this.speed / Constants.SKIER.DIAGONAL_SPEED_REDUCER
+    this.y += this.speed / Constants.SKIER.DIAGONAL_SPEED_REDUCER
   }
 
   moveSkierDown() {
@@ -51,25 +51,25 @@ export class Skier extends Entity {
   }
 
   moveSkierRightDown() {
-    this.x += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER
-    this.y += this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER
+    this.x += this.speed / Constants.SKIER.DIAGONAL_SPEED_REDUCER
+    this.y += this.speed / Constants.SKIER.DIAGONAL_SPEED_REDUCER
   }
 
   moveSkierRight() {
-    this.x += Constants.SKIER_STARTING_SPEED
+    this.x += Constants.SKIER.STARTING_SPEED
   }
 
   moveSkierUp() {
-    this.y -= Constants.SKIER_STARTING_SPEED
+    this.y -= Constants.SKIER.STARTING_SPEED
   }
 
   turnLeft() {
     if (!this.isJumping()) {
-      if (this.direction === Constants.SKIER_DIRECTIONS.LEFT) {
+      if (this.direction === Constants.SKIER.DIRECTIONS.LEFT) {
         this.moveSkierLeft()
-      } else if (this.direction === Constants.SKIER_DIRECTIONS.CRASH) {
+      } else if (this.direction === Constants.SKIER.DIRECTIONS.CRASH) {
         this.moveSkierLeft()
-        this.setDirection(Constants.SKIER_DIRECTIONS.LEFT)
+        this.setDirection(Constants.SKIER.DIRECTIONS.LEFT)
       } else {
         this.setDirection(this.direction - 1)
       }
@@ -78,11 +78,11 @@ export class Skier extends Entity {
 
   turnRight() {
     if (!this.isJumping()) {
-      if (this.direction === Constants.SKIER_DIRECTIONS.RIGHT) {
+      if (this.direction === Constants.SKIER.DIRECTIONS.RIGHT) {
         this.moveSkierRight()
-      } else if (this.direction === Constants.SKIER_DIRECTIONS.CRASH) {
+      } else if (this.direction === Constants.SKIER.DIRECTIONS.CRASH) {
         this.moveSkierRight()
-        this.setDirection(Constants.SKIER_DIRECTIONS.RIGHT)
+        this.setDirection(Constants.SKIER.DIRECTIONS.RIGHT)
       } else {
         this.setDirection(this.direction + 1)
       }
@@ -92,8 +92,8 @@ export class Skier extends Entity {
   turnUp() {
     if (
       !this.isJumping() ||
-      this.direction === Constants.SKIER_DIRECTIONS.LEFT ||
-      this.direction === Constants.SKIER_DIRECTIONS.RIGHT
+      this.direction === Constants.SKIER.DIRECTIONS.LEFT ||
+      this.direction === Constants.SKIER.DIRECTIONS.RIGHT
     ) {
       this.moveSkierUp()
     }
@@ -101,35 +101,35 @@ export class Skier extends Entity {
 
   turnDown() {
     if (!this.isJumping()) {
-      this.setDirection(Constants.SKIER_DIRECTIONS.DOWN)
+      this.setDirection(Constants.SKIER.DIRECTIONS.DOWN)
     }
   }
 
   jump() {
-    this.setDirection(Constants.SKIER_DIRECTIONS.JUMP)
+    this.setDirection(Constants.SKIER.DIRECTIONS.JUMP)
 
     // disable animations while testing to avoid race conditions
     if (Constants.ANIMATIONS_ENABLED) {
       const animation = setInterval(() => {
         switch (this.direction) {
-          case Constants.SKIER_DIRECTIONS.JUMP:
-            this.setDirection(Constants.SKIER_DIRECTIONS.JUMP2)
+          case Constants.SKIER.DIRECTIONS.JUMP:
+            this.setDirection(Constants.SKIER.DIRECTIONS.JUMP2)
             break
-          case Constants.SKIER_DIRECTIONS.JUMP2:
-            this.setDirection(Constants.SKIER_DIRECTIONS.JUMP3)
+          case Constants.SKIER.DIRECTIONS.JUMP2:
+            this.setDirection(Constants.SKIER.DIRECTIONS.JUMP3)
             break
-          case Constants.SKIER_DIRECTIONS.JUMP3:
-            this.setDirection(Constants.SKIER_DIRECTIONS.JUMP4)
+          case Constants.SKIER.DIRECTIONS.JUMP3:
+            this.setDirection(Constants.SKIER.DIRECTIONS.JUMP4)
             break
-          case Constants.SKIER_DIRECTIONS.JUMP4:
+          case Constants.SKIER.DIRECTIONS.JUMP4:
             clearInterval(animation)
-            this.setDirection(Constants.SKIER_DIRECTIONS.DOWN)
+            this.setDirection(Constants.SKIER.DIRECTIONS.DOWN)
             break
-          case Constants.SKIER_DIRECTIONS.CRASH:
+          case Constants.SKIER.DIRECTIONS.CRASH:
             clearInterval(animation)
             break
         }
-      }, Constants.SKIER_JUMP_ANIMATION_SPEED)
+      }, Constants.SKIER.JUMP_ANIMATION_SPEED)
     }
   }
 
@@ -163,7 +163,7 @@ export class Skier extends Entity {
       (collision && collision.isTree()) ||
       (collision && !this.isJumping() && collision.isRock())
     ) {
-      this.setDirection(Constants.SKIER_DIRECTIONS.CRASH)
+      this.setDirection(Constants.SKIER.DIRECTIONS.CRASH)
     }
   }
 }
