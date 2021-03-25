@@ -11,6 +11,12 @@ export const GAME_HEIGHT = window.innerHeight
 // disable animations while testing to avoid race conditions
 export const ANIMATIONS_ENABLED = process.env.NODE_ENV !== 'test'
 
+export const GAME_STATUS = {
+  LOADING: 0,
+  RUNNING: 1,
+  OVER: 2
+}
+
 export const COLORS = {
   BLACK: '#000000',
   RED: '#ff0000'
@@ -27,5 +33,6 @@ export const KEYS = {
   RIGHT: 39,
   UP: 38,
   DOWN: 40,
-  SPACE: 32
+  SPACE: 32,
+  R: 82
 }

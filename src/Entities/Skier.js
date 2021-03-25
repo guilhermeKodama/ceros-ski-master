@@ -144,7 +144,7 @@ export class Skier extends Entity {
     this.setDirection(Constants.SKIER.DIRECTIONS.DEAD)
   }
 
-  checkIfSkierHitObstacle(obstacleManager, assetManager) {
+  checkIfSkierHitObstacle(obstacleManager, assetManager, game) {
     const asset = assetManager.getAsset(this.assetName)
 
     const skierBounds = new Rect(

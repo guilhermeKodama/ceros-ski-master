@@ -122,6 +122,7 @@ I decided to use [gitmoji](https://gitmoji.dev/) on my commits because it helps 
 - Refactored **Constants**. It was clear that the Constants file would get bigger and bigger everytime we decided to add a new feature in the game. So I decided to restructure that file as a module where you could split constants from different entities and obstacles in different files and keep the code clean.
 - Display score. Score is based on the distance traveled
 - Change score color when the Rhino is on the loose so the player knows it needs to avoid any mistakes at all cost.
+- Reset the game pressing 'R' after the game is over
 
 ### Know bugs 🐛
 

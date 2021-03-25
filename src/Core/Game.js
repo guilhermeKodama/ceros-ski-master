@@ -11,6 +11,7 @@ export class Game {
   gameWindow = null
 
   constructor() {
+    this.status = Constants.GAME_STATUS.LOADING
     this.score = 0
     this.assetManager = new AssetManager()
     this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT)
@@ -23,21 +24,53 @@ export class Game {
 
   init() {
     this.obstacleManager.placeInitialObstacles()
+    this.status = Constants.GAME_STATUS.RUNNING
   }
 
   async load() {
     await this.assetManager.loadAssets(Constants.ASSETS)
   }
 
+  setStatus(status) {
+    this.status = status
+  }
+
+  isGameOver() {
+    return this.status === Constants.GAME_STATUS.OVER
+  }
+
+  showResetMessage() {
+    this.canvas.drawText(
+      'PRESS "R" TO RESET THE GAME',
+      Constants.COLORS.BLACK,
+      Constants.GAME_WIDTH * 0.25,
+      Constants.GAME_HEIGHT * 0.8
+    )
+  }
+
   isRhinoOnTheLoose() {
     return this.score > 1000
+  }
+
+  reset() {
+    this.status = Constants.GAME_STATUS.LOADING
+    this.score = 0
+    this.rhino = new Rhino(500, -100)
+    this.skier = new Skier(0, 0)
+    this.obstacleManager = new ObstacleManager()
+
+    this.obstacleManager.placeInitialObstacles()
+
+    this.status = Constants.GAME_STATUS.RUNNING
   }
 
   run() {
     this.canvas.clearCanvas()
 
-    this.updateGameWindow()
-    this.drawGameWindow()
+    if (this.status !== Constants.GAME_STATUS.LOADING) {
+      this.updateGameWindow()
+      this.drawGameWindow()
+    }
 
     requestAnimationFrame(this.run.bind(this))
   }
@@ -52,8 +85,8 @@ export class Game {
 
     this.obstacleManager.placeNewObstacle(this.gameWindow, previousGameWindow)
 
-    this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager)
-    this.rhino.checkIfHitSkier(this.skier, this.assetManager)
+    this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager, this)
+    this.rhino.checkIfHitSkier(this.skier, this.assetManager, this)
     this.skier.checkIfHitRhino(this.rhino, this.assetManager)
   }
 
@@ -70,6 +103,10 @@ export class Game {
     if (!this.skier.isDead()) this.skier.draw(this.canvas, this.assetManager)
     if (this.isRhinoOnTheLoose()) this.rhino.draw(this.canvas, this.assetManager)
     this.obstacleManager.drawObstacles(this.canvas, this.assetManager)
+
+    if (this.isGameOver()) {
+      this.showResetMessage()
+    }
   }
 
   calculateGameWindow() {
@@ -104,6 +141,12 @@ export class Game {
         break
       case Constants.KEYS.SPACE:
         this.skier.jump()
+        event.preventDefault()
+        break
+      case Constants.KEYS.R:
+        if (this.isGameOver()) {
+          this.reset()
+        }
         event.preventDefault()
         break
     }

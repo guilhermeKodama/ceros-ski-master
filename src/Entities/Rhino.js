@@ -80,7 +80,7 @@ export class Rhino extends Entity {
     }
   }
 
-  checkIfHitSkier(skier, assetManager) {
+  checkIfHitSkier(skier, assetManager, game) {
     const asset = assetManager.getAsset(this.assetName)
 
     const rhinoBounds = new Rect(
@@ -104,6 +104,7 @@ export class Rhino extends Entity {
 
     if (collision && !this.isEating()) {
       this.eat()
+      game.setStatus(Constants.GAME_STATUS.OVER)
     }
   }
 }
