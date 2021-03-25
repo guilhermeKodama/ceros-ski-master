@@ -105,8 +105,6 @@ We are looking forward to see what you come up with!
 
 # Development & Changes
 
-You can check the project on github and see my commit history to see the changes here: https://github.com/guilhermeKodama/ceros-ski-master
-
 I decided to use [gitmoji](https://gitmoji.dev/) on my commits because it helps you quickly understand the context of the changes and it helps you later check the history and see what your team worked on and maybe even spot issues. (like working on too many bug fixes)
 
 - Fixed npm vulnerabilities - updated module versions
@@ -114,7 +112,7 @@ I decided to use [gitmoji](https://gitmoji.dev/) on my commits because it helps 
 - Fixed a bug for crashing and turning left.
 - Added unit tests for Skier main behaviours and also to prevent the previous bug.
 - Added the ramp obstacle that triggers the skier to jump.
-- Added the jump skill to the skier.
+- Added the jump skill to the skier. You can use the **space bar** to jump over rocks
 - Added the Rhino Entity
   - Appears after the player scored 1000 points.
   - the espeed increases over time and will always moves towards the skier. So **the end is inevitable**
@@ -127,6 +125,7 @@ I decided to use [gitmoji](https://gitmoji.dev/) on my commits because it helps 
 - Add bonus points for jumping over rocks
 - Added unit tests for new bonus points features
 - Added unit tests for Rhino eating the player
+- Added changes so it would be able to deploy this project to Github Pages
 
 ### Know bugs 🐛
 
@@ -136,7 +135,7 @@ I decided to use [gitmoji](https://gitmoji.dev/) on my commits because it helps 
 
 ### Build & Deploy
 
-This project is deployed using github pages. You can deploy a new version in the `master` branch running the following commands
+This project is deployed using github pages. You can deploy a new version in the `development` branch running the following commands
 
 ```
 npm run build

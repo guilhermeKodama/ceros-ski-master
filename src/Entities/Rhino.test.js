@@ -1,5 +1,5 @@
 import 'babel-polyfill'
-import testUtils from '../testUtils'
+import testUtils from '../utils/tests'
 import * as Constants from '../Constants'
 import { Rhino } from './Rhino'
 import { Skier } from './Skier'

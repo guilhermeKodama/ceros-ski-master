@@ -91,7 +91,7 @@ export class Game {
     const previousGameWindow = this.gameWindow
     this.calculateGameWindow()
 
-    this.obstacleManager.placeNewObstacle(this.gameWindow, previousGameWindow)
+    if (this.gameWindow) this.obstacleManager.placeNewObstacle(this.gameWindow, previousGameWindow)
 
     this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager, this)
     this.rhino.checkIfHitSkier(this.skier, this.assetManager, this)

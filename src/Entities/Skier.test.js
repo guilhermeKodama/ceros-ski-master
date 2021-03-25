@@ -1,7 +1,7 @@
 import 'babel-polyfill'
 import * as Constants from '../Constants'
 import { Skier } from './Skier'
-import testUtils from '../testUtils'
+import testUtils from '../utils/tests'
 import { Obstacle } from './Obstacles/Obstacle'
 import { AssetManager } from '../Core/AssetManager'
 import { ObstacleManager } from './Obstacles/ObstacleManager'
