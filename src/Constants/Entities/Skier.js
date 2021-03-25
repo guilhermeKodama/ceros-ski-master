@@ -1,4 +1,4 @@
-import path from 'path'
+import utils from '../../utils/asset'
 
 export const STARTING_SPEED = 10
 export const JUMP_ANIMATION_SPEED = 200
@@ -20,17 +20,17 @@ export const JUMP_3 = 'skierJump3'
 export const JUMP_4 = 'skierJump4'
 
 export const ASSETS = {
-  [CRASH]: path.join(__dirname, '../img/skier_crash.png'),
-  [LEFT]: path.join(__dirname, '../img/skier_left.png'),
-  [LEFTDOWN]: path.join(__dirname, '../img/skier_left_down.png'),
-  [DOWN]: path.join(__dirname, '../img/skier_down.png'),
-  [RIGHTDOWN]: path.join(__dirname, '../img/skier_right_down.png'),
-  [DEAD]: path.join(__dirname, '../img/skier_crash.png'),
-  [RIGHT]: path.join(__dirname, '../img/skier_right.png'),
-  [JUMP_1]: path.join(__dirname, '../img/skier_jump_1.png'),
-  [JUMP_2]: path.join(__dirname, '../img/skier_jump_2.png'),
-  [JUMP_3]: path.join(__dirname, '../img/skier_jump_3.png'),
-  [JUMP_4]: path.join(__dirname, '../img/skier_jump_4.png')
+  [CRASH]: utils.getAssetPath('/img/skier_crash.png'),
+  [LEFT]: utils.getAssetPath('/img/skier_left.png'),
+  [LEFTDOWN]: utils.getAssetPath('/img/skier_left_down.png'),
+  [DOWN]: utils.getAssetPath('/img/skier_down.png'),
+  [RIGHTDOWN]: utils.getAssetPath('/img/skier_right_down.png'),
+  [DEAD]: utils.getAssetPath('/img/skier_crash.png'),
+  [RIGHT]: utils.getAssetPath('/img/skier_right.png'),
+  [JUMP_1]: utils.getAssetPath('/img/skier_jump_1.png'),
+  [JUMP_2]: utils.getAssetPath('/img/skier_jump_2.png'),
+  [JUMP_3]: utils.getAssetPath('/img/skier_jump_3.png'),
+  [JUMP_4]: utils.getAssetPath('/img/skier_jump_4.png')
 }
 
 export const DIRECTIONS = {

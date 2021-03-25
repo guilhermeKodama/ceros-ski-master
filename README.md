@@ -133,3 +133,12 @@ I decided to use [gitmoji](https://gitmoji.dev/) on my commits because it helps 
 - You can go over an obstacle by just pressing down after you crash it
 - If you stop by turning left or right you can go up by pressing the up arrow. Not sure if it makes sense to go up in this game
 - Bonus points for jumping over rocks are added several times while skier is still "jumping"
+
+### Build & Deploy
+
+This project is deployed using github pages. You can deploy a new version in the `master` branch running the following commands
+
+```
+npm run build
+npm run deploy
+```

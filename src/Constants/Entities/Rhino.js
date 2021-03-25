@@ -1,4 +1,4 @@
-import path from 'path'
+import utils from '../../utils/asset'
 
 export const EAT_ANIMATION_SPEED = 400
 export const INCREASE_ACCELERATION_TIMER = 4000
@@ -22,13 +22,13 @@ export const DIRECTIONS = {
 }
 
 export const ASSETS = {
-  [RHINO]: path.join(__dirname, '../img/rhino_default.png'),
-  [LEFT]: path.join(__dirname, '../img/rhino_run_left.png'),
-  [LEFT2]: path.join(__dirname, '../img/rhino_run_left_2.png'),
-  [LIFT]: path.join(__dirname, '../img/rhino_lift.png'),
-  [LIFT_MOUTH_OPEN]: path.join(__dirname, '../img/rhino_lift_mouth_open.png'),
-  [EAT]: path.join(__dirname, '../img/rhino_lift_eat_1.png'),
-  [EAT2]: path.join(__dirname, '../img/rhino_lift_eat_2.png'),
-  [EAT3]: path.join(__dirname, '../img/rhino_lift_eat_3.png'),
-  [EAT4]: path.join(__dirname, '../img/rhino_lift_eat_4.png')
+  [RHINO]: utils.getAssetPath('/img/rhino_default.png'),
+  [LEFT]: utils.getAssetPath('/img/rhino_run_left.png'),
+  [LEFT2]: utils.getAssetPath('/img/rhino_run_left_2.png'),
+  [LIFT]: utils.getAssetPath('/img/rhino_lift.png'),
+  [LIFT_MOUTH_OPEN]: utils.getAssetPath('/img/rhino_lift_mouth_open.png'),
+  [EAT]: utils.getAssetPath('/img/rhino_lift_eat_1.png'),
+  [EAT2]: utils.getAssetPath('/img/rhino_lift_eat_2.png'),
+  [EAT3]: utils.getAssetPath('/img/rhino_lift_eat_3.png'),
+  [EAT4]: utils.getAssetPath('/img/rhino_lift_eat_4.png')
 }
