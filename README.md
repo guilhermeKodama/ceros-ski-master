@@ -123,8 +123,13 @@ I decided to use [gitmoji](https://gitmoji.dev/) on my commits because it helps 
 - Display score. Score is based on the distance traveled
 - Change score color when the Rhino is on the loose so the player knows it needs to avoid any mistakes at all cost.
 - Reset the game pressing 'R' after the game is over
+- Add bonus points to using the ramp
+- Add bonus points for jumping over rocks
+- Added unit tests for new bonus points features
+- Added unit tests for Rhino eating the player
 
 ### Know bugs 🐛
 
 - You can go over an obstacle by just pressing down after you crash it
 - If you stop by turning left or right you can go up by pressing the up arrow. Not sure if it makes sense to go up in this game
+- Bonus points for jumping over rocks are added several times while skier is still "jumping"

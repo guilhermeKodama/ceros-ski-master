@@ -1,15 +1,21 @@
 import 'babel-polyfill'
 import * as Constants from '../Constants'
 import { Skier } from './Skier'
+import testUtils from '../testUtils'
 import { Obstacle } from './Obstacles/Obstacle'
 import { AssetManager } from '../Core/AssetManager'
 import { ObstacleManager } from './Obstacles/ObstacleManager'
 
 let assetManager = null
+const game = testUtils.mockGame()
 
 beforeAll(async () => {
   assetManager = new AssetManager()
   await assetManager.loadAssets(Constants.ASSETS)
+})
+
+afterEach(() => {
+  testUtils.sandbox.resetHistory()
 })
 
 /*
@@ -74,7 +80,7 @@ test('should crash in trees while jumping', () => {
   obstacleManager.obstacles.push(obstacle)
 
   // simulate collision
-  skier.checkIfSkierHitObstacle(obstacleManager, assetManager)
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager, game)
 
   expect(skier.direction).toBe(Constants.SKIER.DIRECTIONS.CRASH)
   expect(skier.assetName).toBe(Constants.SKIER.CRASH)
@@ -93,7 +99,7 @@ test('should crash in tree cluster while jumping', () => {
   obstacleManager.obstacles.push(obstacle)
 
   // simulate collision
-  skier.checkIfSkierHitObstacle(obstacleManager, assetManager)
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager, game)
 
   expect(skier.direction).toBe(Constants.SKIER.DIRECTIONS.CRASH)
   expect(skier.assetName).toBe(Constants.SKIER.CRASH)
@@ -112,7 +118,7 @@ test('should not crash in rocks while jumping', () => {
   obstacleManager.obstacles.push(obstacle)
 
   // simulate collision
-  skier.checkIfSkierHitObstacle(obstacleManager, assetManager)
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager, game)
 
   expect(skier.direction).toBe(Constants.SKIER.DIRECTIONS.JUMP)
   expect(skier.assetName).toBe(Constants.SKIER.JUMP_1)
@@ -131,7 +137,7 @@ test('should not crash in cluster rocks while jumping', () => {
   obstacleManager.obstacles.push(obstacle)
 
   // simulate collision
-  skier.checkIfSkierHitObstacle(obstacleManager, assetManager)
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager, game)
 
   expect(skier.direction).toBe(Constants.SKIER.DIRECTIONS.JUMP)
   expect(skier.assetName).toBe(Constants.SKIER.JUMP_1)
@@ -154,7 +160,7 @@ test('should recover from collision and turn left', () => {
   obstacleManager.obstacles.push(obstacle)
 
   // simulate collision
-  skier.checkIfSkierHitObstacle(obstacleManager, assetManager)
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager, game)
 
   skier.turnLeft()
 
@@ -175,10 +181,72 @@ test('should recover from collision and turn right', () => {
   obstacleManager.obstacles.push(obstacle)
 
   // simulate collision
-  skier.checkIfSkierHitObstacle(obstacleManager, assetManager)
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager, game)
 
   skier.turnRight()
 
   expect(skier.direction).toBe(Constants.SKIER.DIRECTIONS.RIGHT)
   expect(skier.assetName).toBe(Constants.SKIER.RIGHT)
+})
+
+/*
+  BONUS POINTS
+ */
+
+test('should add bonus points for hitting a ramp', () => {
+  const skier = new Skier(0, 0)
+
+  const obstacle = new Obstacle(0, 0)
+
+  obstacle.assetName = Constants.OBSTACLES.RAMP
+
+  const obstacleManager = new ObstacleManager()
+
+  // mock obstacle
+  obstacleManager.obstacles.push(obstacle)
+
+  // simulate collision
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager, game)
+
+  // check if we gave bonus points for that
+  expect(game.addBonusPoints.calledOnce).toBe(true)
+})
+
+test('should add bonus points for jumping over rocks', () => {
+  const skier = new Skier(0, 0)
+  skier.jump()
+
+  const obstacle = new Obstacle(0, 0)
+
+  obstacle.assetName = Constants.OBSTACLES.ROCK1
+
+  const obstacleManager = new ObstacleManager()
+
+  // mock obstacle
+  obstacleManager.obstacles.push(obstacle)
+
+  // simulate collision
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager, game)
+
+  // check if we gave bonus points for that
+  expect(game.addBonusPoints.calledOnce).toBe(true)
+})
+
+test('should not add bonus points if skier collid with the rock with out jumping', () => {
+  const skier = new Skier(0, 0)
+
+  const obstacle = new Obstacle(0, 0)
+
+  obstacle.assetName = Constants.OBSTACLES.ROCK1
+
+  const obstacleManager = new ObstacleManager()
+
+  // mock obstacle
+  obstacleManager.obstacles.push(obstacle)
+
+  // simulate collision
+  skier.checkIfSkierHitObstacle(obstacleManager, assetManager, game)
+
+  // check if we gave bonus points for that
+  expect(game.addBonusPoints.calledOnce).toBe(false)
 })

@@ -12,6 +12,8 @@ export class Game {
 
   constructor() {
     this.status = Constants.GAME_STATUS.LOADING
+    this.distancePoints = 0
+    this.bonusPoints = 0
     this.score = 0
     this.assetManager = new AssetManager()
     this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT)
@@ -48,12 +50,18 @@ export class Game {
     )
   }
 
+  addBonusPoints(points) {
+    this.bonusPoints += points
+  }
+
   isRhinoOnTheLoose() {
-    return this.score > 1000
+    return this.distancePoints > 1000
   }
 
   reset() {
     this.status = Constants.GAME_STATUS.LOADING
+    this.distancePoints = 0
+    this.bonusPoints = 0
     this.score = 0
     this.rhino = new Rhino(500, -100)
     this.skier = new Skier(0, 0)
@@ -118,7 +126,8 @@ export class Game {
   }
 
   calculateScore() {
-    this.score = parseInt(this.skier.y / 10)
+    this.distancePoints = parseInt(this.skier.y / 10)
+    this.score = this.distancePoints + this.bonusPoints
   }
 
   handleKeyDown(event) {

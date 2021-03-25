@@ -11,6 +11,11 @@ export const GAME_HEIGHT = window.innerHeight
 // disable animations while testing to avoid race conditions
 export const ANIMATIONS_ENABLED = process.env.NODE_ENV !== 'test'
 
+export const POINTS = {
+  HIT_RAMP: 200,
+  JUMPED_OVER_ROCK: 25
+}
+
 export const GAME_STATUS = {
   LOADING: 0,
   RUNNING: 1,

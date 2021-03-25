@@ -168,8 +168,14 @@ export class Skier extends Entity {
       return intersectTwoRects(skierBounds, obstacleBounds)
     })
 
+    // bonus points for jumping over rocs \o/
+    if (collision && collision.isRock() && this.isJumping()) {
+      game.addBonusPoints(Constants.POINTS.JUMPED_OVER_ROCK)
+    }
+
     if (collision && collision.isRamp() && !this.isJumping()) {
       this.jump()
+      game.addBonusPoints(Constants.POINTS.HIT_RAMP)
     } else if (
       (collision && collision.isTree()) ||
       (collision && !this.isJumping() && collision.isRock())
