@@ -8,7 +8,13 @@ export const OBSTACLES = Obstacles
 export const GAME_WIDTH = window.innerWidth
 export const GAME_HEIGHT = window.innerHeight
 
+// disable animations while testing to avoid race conditions
 export const ANIMATIONS_ENABLED = process.env.NODE_ENV !== 'test'
+
+export const COLORS = {
+  BLACK: '#000000',
+  RED: '#ff0000'
+}
 
 export const ASSETS = {
   ...SKIER.ASSETS,

@@ -7,6 +7,7 @@ export class Canvas {
     x: 0,
     y: 0
   }
+
   ctx = null
 
   constructor(width, height) {
@@ -41,5 +42,11 @@ export class Canvas {
     y -= this.drawOffset.y
 
     this.ctx.drawImage(image, x, y, width, height)
+  }
+
+  drawText(text, color, x, y) {
+    this.ctx.font = '46px Detective'
+    this.ctx.fillStyle = color || '#000000'
+    this.ctx.fillText(text, x, y)
   }
 }

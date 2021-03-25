@@ -60,6 +60,13 @@ export class Game {
   drawGameWindow() {
     this.canvas.setDrawOffset(this.gameWindow.left, this.gameWindow.top)
 
+    this.canvas.drawText(
+      `score: ${this.score}`,
+      this.isRhinoOnTheLoose() ? Constants.COLORS.RED : Constants.COLORS.BLACK,
+      10,
+      80
+    )
+
     if (!this.skier.isDead()) this.skier.draw(this.canvas, this.assetManager)
     if (this.isRhinoOnTheLoose()) this.rhino.draw(this.canvas, this.assetManager)
     this.obstacleManager.drawObstacles(this.canvas, this.assetManager)

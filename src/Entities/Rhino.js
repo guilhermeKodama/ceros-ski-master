@@ -43,10 +43,6 @@ export class Rhino extends Entity {
     // move towards player
     this.x += newX * this.speed
     this.y += newY * this.speed
-
-    // rotate
-
-    this.rotation = Math.atan2(newY, newX)
   }
 
   isEating() {
